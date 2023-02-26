@@ -101,6 +101,7 @@ export default function App() {
           <Table.Column title="Buyer" dataIndex="buyer" />
           <Table.Column title="Token Id" dataIndex="tokenId" />
           <Table.Column title="NFT Address" dataIndex="nftAddress" />
+          <Table.Column title="Price" dataIndex="price" />
         </Table>
       </Col>
     </Row>
