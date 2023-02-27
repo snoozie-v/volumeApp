@@ -172,7 +172,7 @@ export default function App() {
     try {
       const event = connex.thor.account(VESEA_ADDRESS).event(itemBoughtABI);
       const logs = await event
-        .filter([{ }])
+        .filter([{ buyer:address }])
         .order("desc")
         .apply(0, 200);
       const transfers = logs.map(({ decoded, meta }) => ({
