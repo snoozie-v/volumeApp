@@ -4,6 +4,7 @@ import Home from './pages/Home';
 import About from './pages/About';
 import NoPage from './pages/NoPage';
 import SweeperTrack from './pages/SweeperTrack';
+import SweeperTrackB from './pages/SweeperTrackB';
 
 function App() {
  
@@ -14,6 +15,7 @@ function App() {
         <Route path ='/home' element = {<Home />} />
         <Route path ='/about' element = {<About />} />
         <Route path ='/sweepertrack' element = {<SweeperTrack />} />
+        <Route path ="/sweepertrackb" element = {<SweeperTrackB />} />
         <Route path ='*' element = {<NoPage />} />
       </Route>
     </Routes>
