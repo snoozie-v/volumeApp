@@ -8,7 +8,7 @@ function About() {
     <div className='bg-[#9fb2c1]'>
       
         <img src={snoozie}></img>
-        I love numbers :)<br/>
+        I love numbers<br/>
         <Link to='/home' className='text-[#ff4e12]'>Go Home</Link><br></br>
        
         <Footer />
