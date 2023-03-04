@@ -12,7 +12,10 @@ function Layout() {
                 <Link to="/home">Home</Link>
             </li>
             <li className='text-[#ff4e12] hover:underline'>
-                <Link to="/about">About</Link>
+                <Link to="/wallet">By Wallet</Link>
+            </li>
+            <li className='text-[#ff4e12] hover:underline'>
+                <Link to='topiczero'>Topic0</Link>
             </li>
             <li className='text-[#ff4e12] hover:underline'>
                 <Link to="/sweepertrack">Mino Sweeper</Link>
