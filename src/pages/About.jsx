@@ -12,7 +12,7 @@ const connex = new Connex({
 })
 
 const pubDate = new Date();
-pubDate.setTime(1577443400 * 1000)
+pubDate.setTime(1678048200 * 1000)
 
 console.log(pubDate)
 

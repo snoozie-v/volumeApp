@@ -67,7 +67,7 @@ export default function App() {
         .range({
           unit: 'time',
           from: 1677443400,
-          to: 1677875400
+          to: 1678048200
         })
         .order("desc")
         .apply(0, 200);
@@ -86,6 +86,7 @@ export default function App() {
   useEffect(() => {
     getHistoryFor(address);
   }, [address]);
+
 
   return (
     <div>

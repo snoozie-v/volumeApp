@@ -11,13 +11,6 @@ const connex = new Connex({
   network: 'main'
 })
 
-const pubDate = new Date();
-pubDate.setTime(1677875400 * 1000)
-
-console.log(pubDate)
-
-
-
 
 const offerAccepted = {
   anonymous: false,
@@ -119,7 +112,7 @@ export default function App() {
         .range({
           unit: 'time',
           from: 1677443400,
-          to: 1677875400
+          to: 1678048200
         })
         .order("desc")
         .apply(0, 200);
