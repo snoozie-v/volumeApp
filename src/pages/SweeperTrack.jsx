@@ -66,7 +66,7 @@ export default function App() {
         .filter([{ nftAddress:address }])
         .range({
           unit: 'time',
-          from: 1677443400,
+          from: 1678033730,
           to: 1678048200
         })
         .order("desc")
