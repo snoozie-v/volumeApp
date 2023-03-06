@@ -111,8 +111,8 @@ export default function App() {
         .filter([{ nftAddress:address }])
         .range({
           unit: 'time',
-          from: 1678033730,
-          to: 1678048200
+          from: 1678048200,
+          to: 1678653000
         })
         .order("desc")
         .apply(0, 200);
@@ -137,7 +137,7 @@ export default function App() {
     <div>
     <Row gutter={[32, 32]}>
       <Col span={24} align="center">
-        <h3>Last OfferAccepted Events on VeSea for Mino Mob</h3>
+        <h3>Mino Mob NFTs offer accepted and collection offer accepted for SweeperClub 3-5-23 to 3-12-23</h3>
       </Col>
       <Col span={24}>
         <Table dataSource={transfers} pagination={true}>
@@ -148,7 +148,6 @@ export default function App() {
           />
           <Table.Column title="Buyer" dataIndex="buyer" />
           <Table.Column title="Token Id" dataIndex="tokenId" />
-          <Table.Column title="NFT Address" dataIndex="nftAddress" />
           <Table.Column title="Price" dataIndex="price" render={(value) => ethers.utils.formatEther(value)} />
         </Table>
       </Col>
