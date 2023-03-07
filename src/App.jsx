@@ -7,6 +7,7 @@ import SweeperTrack from './pages/SweeperTrack.jsx';
 import SweeperTrackB from './pages/SweeperTrackB.jsx';
 import TopicZero from './pages/TopicZero.jsx';
 import Testing from './pages/Testing.jsx'
+import Dashboard from './pages/Dashboard.jsx';
 
 function App() {
  
@@ -20,6 +21,7 @@ function App() {
         <Route path ='/sweepertrack' element = {<SweeperTrack />} />
         <Route path ="/sweepertrackb" element = {<SweeperTrackB />} />
         <Route path ="/testing" element = {<Testing />} />
+        <Route path ='/dashboard' element = {<Dashboard />} />
         <Route path ='*' element = {<NoPage />} />
       </Route>
     </Routes>

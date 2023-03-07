@@ -18,13 +18,16 @@ function Layout() {
                 <Link to='topiczero'>Topic0</Link>
             </li>
             <li className='text-[#ff4e12] hover:underline'>
-                <Link to="/sweepertrack">Mino Sweeper </Link>
+                <Link to="/sweepertrack">Collection Offer Accepted </Link>
             </li>
             <li className='text-[#ff4e12] hover:underline'>
-                <Link to="/sweepertrackb">Mino Sweeper B</Link>
+                <Link to="/sweepertrackb">Offer Accepted</Link>
             </li>
             <li className='text-[#ff4e12] hover:underline'>
-                <Link to="/testing">Testing</Link>
+                <Link to="/testing">itemBought</Link>
+            </li>
+            <li className='text-[#ff4e12] hover:underline'>
+                <Link to="/dashboard">Dashboard</Link>
             </li>
         </ul>
       </div>
