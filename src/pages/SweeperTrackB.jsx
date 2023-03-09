@@ -1,17 +1,14 @@
-import React from 'react'
-import Connex from '@vechain/connex'
-import "antd/dist/antd";
-import { useEffect, useState } from "react";
-import { Row, Col, Input, Table } from "antd"
-import Footer from './Footer'
-import { ethers } from '@vechain/ethers';
+
+import React, { useState, useEffect } from 'react';
+import Connex from '@vechain/connex';
+import Footer from './Footer';
 
 const connex = new Connex({
   node: 'https://mainnet.veblocks.net',
   network: 'main'
-})
+});
 
-const offerAccepted = {
+const OFFER_ACCEPTED_ABI = {
   anonymous: false,
 		inputs: [
 			{
@@ -49,88 +46,66 @@ const offerAccepted = {
 		type: "event"
 }
 
+const VESEA_ADDRESS = "0xdab185Ca52b70e087eC0990aD59C612c3d7aAb14";
+const MINO_ADDRESS = '0xF4D82631bE350c37d92ee816c2bD4D5Adf9E6493';
 
-
-const VESEA_OFFERS_ADDRESS = "0xdab185Ca52b70e087eC0990aD59C612c3d7aAb14";
-
-export default function App() {
+export default function WalletRanking() {
   const [transfers, setTransfers] = useState([]);
-  const [walletCountsB, setWalletCountsB] = useState({});
-  const [address, setAddress] = useState(
-    "0xF4D82631bE350c37d92ee816c2bD4D5Adf9E6493"
-  );
+  const [walletCounts, setWalletCounts] = useState({});
 
-  async function getHistoryFor(address) {
+  async function getTransfers(minoAddress) {
     try {
-      const event = connex.thor.account(VESEA_OFFERS_ADDRESS).event(offerAccepted);
+      const event = connex.thor.account(VESEA_ADDRESS).event(OFFER_ACCEPTED_ABI);
       const logs = await event
-        .filter([{ nftAddress:address }])
+        .filter([{ nftAddress: minoAddress }])
         .range({
           unit: 'time',
-          from: 1677443400,
-          to: 1678048200
+          from: 1678048200,
+          to: 1678653000
         })
-        .order("desc")
+        .order('desc')
         .apply(0, 200);
-        console.log(logs)
+  
       const transfers = logs.map(({ decoded, meta }) => ({
         ...decoded,
         meta
-      }));
-      
+      })); 
+  
       setTransfers(transfers);
-
-      for (let i = 0; i < transfers.length; i++) {
-        console.log(transfers[i].tokenId)
-        const wallet = transfers[i].buyer;
-        if (walletCountsB[wallet]){
-            walletCountsB[wallet] += 1;
+  
+      const counts = {};
+      for (const transfer of transfers) {
+        console.log(transfer.tokenId);
+        const wallet = transfer.buyer;
+        if (counts[wallet]) {
+          counts[wallet]++;
         } else {
-            walletCountsB[wallet] = 1;
+          counts[wallet] = 1;
         }
-  }
-
-  setWalletCountsB(walletCountsB)
-
+      }
+      setWalletCounts(counts);
     } catch (err) {
       setTransfers([]);
       console.log(err);
     }
   }
-
+  
   useEffect(() => {
-    getHistoryFor(address);
-  }, [address]);
-
-
+    getTransfers(MINO_ADDRESS);
+  }, [MINO_ADDRESS]); 
+  
   return (
     <div>
-    <div> <h2>Mino mob, Offer Accepted for 2/26 - 3/5 </h2>
+      <h2 className='p-2'>Mino Mob Offer Accepted by Wallet 3/5 - 3/12</h2>
       <ul>
-        {Object.entries(walletCountsB).map(([wallet, count]) => (
+        {Object.entries(walletCounts).map(([wallet, count]) => (
           <li key={wallet}>
             {wallet}: {count}
           </li>
         ))}
-      </ul></div>
-    {/* <Row gutter={[32, 32]}>
-      <Col span={24} align="center">
-        <h3>Mino Mob NFTs offer accepted and collection offer accepted for SweeperClub 2-26-23 to 3-5-23</h3>
-      </Col>
-      <Col span={24}>
-        <Table dataSource={transfers} pagination={true}>
-          <Table.Column
-            title="Time"
-            dataIndex={["meta", "blockTimestamp"]}
-            render={(ts) => new Date(ts * 1000).toString()}
-          />
-          <Table.Column title="Buyer" dataIndex="buyer" />
-          <Table.Column title="Token Id" dataIndex="tokenId" />
-          <Table.Column title="Price" dataIndex="price" render={(value) => ethers.utils.formatEther(value)} />
-        </Table>
-      </Col>
-    </Row> */}
-    <Footer />
+      </ul>
+      <Footer />
     </div>
   );
 }
+

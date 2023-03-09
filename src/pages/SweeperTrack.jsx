@@ -11,7 +11,7 @@ const connex = new Connex({
   network: 'main'
 })
 
-const CollectionOfferAccepted = {
+const COLLECTION_OFFER_ACCEPTED_ABI = {
   anonymous: false,
   inputs: [
     {
@@ -54,69 +54,65 @@ const CollectionOfferAccepted = {
   name: "CollectionOfferAccepted",
   type: "event"
 }
-const VESEA_OFFERS_ADDRESS = "0xdab185Ca52b70e087eC0990aD59C612c3d7aAb14";
+const VESEA_ADDRESS = "0xdab185Ca52b70e087eC0990aD59C612c3d7aAb14";
+const MINO_ADDRESS = '0xF4D82631bE350c37d92ee816c2bD4D5Adf9E6493';
 
-export default function App() {
+export default function WalletRanking() {
   const [transfers, setTransfers] = useState([]);
-  const [walletCountsA, setWalletCountsA] = useState({});
-  const [address, setAddress] = useState(
-    "0xF4D82631bE350c37d92ee816c2bD4D5Adf9E6493"
-  );
+  const [walletCounts, setWalletCounts] = useState({});
 
-  async function getHistoryFor(address) {
+  async function getTransfers(minoAddress) {
     try {
-      const event = connex.thor.account(VESEA_OFFERS_ADDRESS).event(CollectionOfferAccepted);
+      const event = connex.thor.account(VESEA_ADDRESS).event(COLLECTION_OFFER_ACCEPTED_ABI);
       const logs = await event
-        .filter([{ nftAddress: address }])
+        .filter([{ nftAddress: minoAddress }])
         .range({
           unit: 'time',
-          from: 1677443400,
-          to: 1678048200
+          from: 1678048200,
+          to: 1678653000
         })
-        .order("desc")
+        .order('desc')
         .apply(0, 200);
-        console.log(logs)
+  
       const transfers = logs.map(({ decoded, meta }) => ({
         ...decoded,
-        meta, 
-      }));
+        meta
+      })); 
   
       setTransfers(transfers);
-
-      for (let i = 0; i < transfers.length; i++) {
-        console.log(transfers[i].tokenId)
-        const wallet = transfers[i].buyer;
-        if (walletCountsA[wallet]){
-            walletCountsA[wallet] += 1;
+  
+      const counts = {};
+      for (const transfer of transfers) {
+        console.log(transfer.tokenId);
+        const wallet = transfer.buyer;
+        if (counts[wallet]) {
+          counts[wallet]++;
         } else {
-            walletCountsA[wallet] = 1;
+          counts[wallet] = 1;
         }
-  }
-
-  setWalletCountsA(walletCountsA)
-
+      }
+      setWalletCounts(counts);
     } catch (err) {
       setTransfers([]);
       console.log(err);
     }
   }
-
+  
   useEffect(() => {
-    getHistoryFor(address);
-  }, [address]);
-
-
+    getTransfers(MINO_ADDRESS);
+  }, [MINO_ADDRESS]); 
+  
   return (
     <div>
-       <div> <h2>Mino mob, Collection Offer accepted for 2/26 - 3/5 </h2>
+      <h2 className='p-2'>Mino Mob Collection Offer Accepted by Wallet 3/5 - 3/12</h2>
       <ul>
-        {Object.entries(walletCountsA).map(([wallet, count]) => (
+        {Object.entries(walletCounts).map(([wallet, count]) => (
           <li key={wallet}>
             {wallet}: {count}
           </li>
         ))}
-      </ul></div>
-    <Footer />
+      </ul>
+      <Footer />
     </div>
   );
 }
